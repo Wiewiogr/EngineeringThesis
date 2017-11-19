@@ -19,6 +19,8 @@ lxc config set $CONTAINER_NAME volatile.last_state.idmap "[]"
 lxc start $CONTAINER_NAME #or lxd restart
 
 cat > /home/$USER_NAME/.profile <<EOF
+curl localhost:5000/user/$USER_NAME/entered
 lxc exec $CONTAINER_NAME bash
+curl localhost:5000/user/$USER_NAME/exited
 exit
 EOF
