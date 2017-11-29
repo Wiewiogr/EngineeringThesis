@@ -9,7 +9,7 @@ users_manager = users.Users()
 
 @app.route('/user/<name>/history')
 def user_last_history(name):
-    return jsonify(users_manager.get_user_history(name))
+    return jsonify(users_manager.get_user_history(str(name)))
 
 
 @app.route('/user', methods=['POST'])

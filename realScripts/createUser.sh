@@ -18,9 +18,19 @@ lxc config set $CONTAINER_NAME volatile.idmap.next "[]"
 lxc config set $CONTAINER_NAME volatile.last_state.idmap "[]"
 lxc start $CONTAINER_NAME #or lxd restart
 
+lxc exec $CONTAINER_NAME -- bash -c "useradd $1 -s /bin/bash -m"
+lxc exec $CONTAINER_NAME -- bash -c "mkdir -p /home/$1/.ssh "
+ssh-keygen -f key -P ""
+mkdir /home/$USER_NAME/.ssh
+mv key /home/$USER_NAME/.ssh/id_rsa
+lxc file push key.pub $CONTAINER_NAME/home/$USER_NAME/.ssh/authorized_keys
+mv key.pub /home/$USER_NAME/.ssh/id_rsa.pub
+chmod +rw /home/$USER_NAME/.ssh/id_rsa*
+
 cat > /home/$USER_NAME/.profile <<EOF
 curl localhost:5000/user/$USER_NAME/entered
-lxc exec $CONTAINER_NAME bash
+#lxc exec $CONTAINER_NAME bash
+ssh \$(lxc ls $CONTAINER_NAME -c4 --format=csv | cut -d" " -f1) -l $USER_NAME
 curl localhost:5000/user/$USER_NAME/exited
 exit
 EOF
