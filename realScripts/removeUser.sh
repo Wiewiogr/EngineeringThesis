@@ -1,9 +1,14 @@
 #!/bin/bash
-USER_NAME=$1
-CONTAINER_NAME=C$USER_NAME
-PATH_TO_REPOS=/root/repos
 
-userdel $USER_NAME
-rm -rf /home/$USER_NAME
-lxc delete --force $CONTAINER_NAME
-rm -rf $PATH_TO_REPOS/$USER_NAME
+if [[ $# -eq 0 ]] ; then
+    echo "usage: $0 <username>"
+    exit 1
+fi
+user_name=$1
+container_name=C${user_name}
+path_to_repos=/root/repos
+
+userdel ${user_name}
+rm -rf /home/${user_name}
+lxc delete --force ${container_name}
+rm -rf ${path_to_repos}/${user_name}
