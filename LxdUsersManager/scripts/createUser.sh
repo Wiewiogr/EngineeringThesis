@@ -1,62 +1,89 @@
 #!/bin/bash
 
-USER_NAME=$1
-PASSWORD=$2
-CONTAINER_NAME=C$USER_NAME
-PATH_TO_REPOS=/root/repos
-LXD_HOST_IP=10.118.5.1
-GIT_REPO_URL=git://$LXD_HOST_IP/$USER_NAME
+validate_and_setup_parameters() {
+    if [[ $# -ge 2 ]] ; then
+        exit 1
+    fi
+    user_name=$1
+    password=$2
+    container_name=C${user_name}
+    path_to_repos=/root/repos
+    lxd_host_ip=10.118.5.1
+}
 
-echo Creating user with name $USER_NAME and container $CONTAINER_NAME
-#useradd $USER_NAME
-useradd $USER_NAME --groups lxd
-echo "$USER_NAME:$PASSWORD" | chpasswd
-mkdir /home/$USER_NAME
-sudo usermod --shell /bin/bash --home /home/$USER_NAME $USER_NAME
-sudo chown -R "$USER_NAME:$USER_NAME" /home/$USER_NAME
-#sudo usermod -G lxd $USER_NAME
+create_user() {
+    #useradd $USER_NAME
+    useradd ${user_name} --groups lxd
+    echo "$user_name:$password" | chpasswd
+    mkdir /home/${user_name}
+    sudo usermod --shell /bin/bash --home /home/${user_name} ${user_name}
+    sudo chown -R ${user_name}:${user_name} /home/${user_name}
+    #sudo usermod -G lxd $USER_NAME
+}
 
-lxc launch ubuntu:16.04 $CONTAINER_NAME
-lxc config set $CONTAINER_NAME volatile.idmap.next "[]"
-lxc config set $CONTAINER_NAME volatile.last_state.idmap "[]"
-lxc start $CONTAINER_NAME #or lxd restart
+create_container() {
+    lxc launch ubuntu:16.04 ${container_name}
+    lxc config set ${container_name} volatile.idmap.next "[]"
+    lxc config set ${container_name} volatile.last_state.idmap "[]"
+    lxc start ${container_name} #or lxd restart
+}
 
-lxc exec $CONTAINER_NAME -- bash -c "useradd $1 -s /bin/bash -m"
-lxc exec $CONTAINER_NAME -- bash -c "mkdir -p /home/$1/.ssh "
-ssh-keygen -f key -P ""
-mkdir /home/$USER_NAME/.ssh
-mv key /home/$USER_NAME/.ssh/id_rsa
-lxc file push key.pub $CONTAINER_NAME/home/$USER_NAME/.ssh/authorized_keys
-mv key.pub /home/$USER_NAME/.ssh/id_rsa.pub
-chmod +rw /home/$USER_NAME/.ssh/id_rsa*
+setup_ssh_on_container() {
+    lxc exec ${container_name} -- bash -c "useradd $1 -s /bin/bash -m"
+    lxc exec ${container_name} -- bash -c "mkdir -p /home/$1/.ssh "
+    ssh-keygen -f key -P ""
+    mkdir /home/${user_name}/.ssh
+    mv key /home/${user_name}/.ssh/id_rsa
+    lxc file push key.pub ${container_name}/home/${user_name}/.ssh/authorized_keys
+    mv key.pub /home/${user_name}/.ssh/id_rsa.pub
+    chmod +rw /home/${user_name}/.ssh/id_rsa*
+}
 
-mkdir -p $PATH_TO_REPOS/$USER_NAME
-git init $PATH_TO_REPOS/$USER_NAME --bare
-echo $GIT_REPO_URL
-sleep 10
-lxc exec $CONTAINER_NAME -- bash -c "git clone $GIT_REPO_URL /home/$USER_NAME/tmp"
-lxc exec $CONTAINER_NAME -- bash -c "mv /home/$USER_NAME/tmp/.git /home/$USER_NAME/"
-lxc exec $CONTAINER_NAME -- bash -c "rm -rf /home/$USER_NAME/tmp"
-lxc file push gitignore $CONTAINER_NAME/home/$USER_NAME/.gitignore
+initialize_repo_on_host() {
+    mkdir -p ${path_to_repos}/${user_name}
+    git init ${path_to_repos}/${user_name} --bare
+}
 
-lxc exec $CONTAINER_NAME -- bash -c "cd /home/$USER_NAME && git add -A && git commit -m \"init\" && git push"
+clone_and_configure_repo_on_container() {
+    local git_repo_url=git://${lxd_host_ip}/${user_name}
+    lxc exec ${container_name} -- bash -c "git clone $git_repo_url /home/$user_name/tmp"
+    lxc exec ${container_name} -- bash -c "mv /home/$user_name/tmp/.git /home/$user_name/"
+    lxc exec ${container_name} -- bash -c "rm -rf /home/$user_name/tmp"
+    lxc file push gitignore ${container_name}/home/${user_name}/.gitignore
+    lxc exec ${container_name} -- bash -c "cd /home/$user_name && git add -A && git commit -m \"init\" && git push"
+    lxc exec ${container_name} -- bash -c "chown -R $user_name:$user_name /home/$user_name/.git"
+    lxc exec ${container_name} -- bash -c "chmod -R +rw /home/$user_name/.git"
 
-lxc exec $CONTAINER_NAME -- bash -c "chown -R $USER_NAME:$USER_NAME /home/$USER_NAME/.git"
-lxc exec $CONTAINER_NAME -- bash -c "chmod -R +rw /home/$USER_NAME/.git"
-
-cat > gitconfig <<EOF
-[user]
-	email = $USER_NAME@$USER_NAME.pl
-	name = $USER_NAME
-[push]
-	default = matching
+    local tmp_gitconfig=$(mktemp)
+    cat > ${tmp_gitconfig} <<EOF
+    [user]
+        email = ${user_name}@${user_name}.pl
+        name = ${user_name}
+    [push]
+        default = matching
 EOF
-lxc file push gitconfig $CONTAINER_NAME/home/$USER_NAME/.gitconfig
-rm gitconfig
+    lxc file push ${tmp_gitconfig} ${container_name}/home/${user_name}/.gitconfig
+    rm ${tmp_gitconfig}
+}
 
-cat > /home/$USER_NAME/.profile <<EOF
-curl localhost:5000/user/$USER_NAME/entered
-ssh \$(lxc ls $CONTAINER_NAME -c4 --format=csv | cut -d" " -f1) -l $USER_NAME
-curl localhost:5000/user/$USER_NAME/exited
-exit
+create_bash_configuration_for_user_on_host() {
+    cat > /home/$user_name/.profile <<EOF
+    curl localhost:5000/user/${user_name}/entered
+    ssh \$(lxc ls ${container_name} -c4 --format=csv | cut -d" " -f1) -l ${user_name}
+    curl localhost:5000/user/${user_name}/exited
+    exit
 EOF
+}
+
+main() {
+    validate_and_setup_parameters $@
+    create_user
+    create_container
+    setup_ssh_on_container
+    initialize_repo_on_host
+    sleep 10
+    clone_and_configure_repo_on_container
+    create_bash_configuration_for_user_on_host
+}
+
+main $@
