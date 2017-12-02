@@ -1,7 +1,7 @@
 #!/bin/bash
 
 validate_and_setup_parameters() {
-    if [[ $# -ge 2 ]] ; then
+    if [[ $# -lt 2 ]] ; then
         exit 1
     fi
     user_name=$1
