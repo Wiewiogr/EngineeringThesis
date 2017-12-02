@@ -2,6 +2,7 @@
 
 validate_and_setup_parameters() {
     if [[ $# -lt 2 ]] ; then
+        echo "usage: $0 <username> <password>"
         exit 1
     fi
     user_name=$1
