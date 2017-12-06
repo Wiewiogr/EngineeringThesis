@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 validate_and_setup_parameters() {
     if [[ $# -lt 2 ]] ; then
@@ -16,7 +16,7 @@ create_user() {
     #useradd $USER_NAME
     useradd ${user_name} --groups lxd
     echo "$user_name:$password" | chpasswd
-    mkdir /home/${user_name}
+    mkdir -p /home/${user_name}
     sudo usermod --shell /bin/bash --home /home/${user_name} ${user_name}
     sudo chown -R ${user_name}:${user_name} /home/${user_name}
     #sudo usermod -G lxd $USER_NAME
@@ -30,14 +30,16 @@ create_container() {
 }
 
 setup_ssh_on_container() {
-    lxc exec ${container_name} -- bash -c "useradd $1 -s /bin/bash -m"
-    lxc exec ${container_name} -- bash -c "mkdir -p /home/$1/.ssh "
+    lxc exec ${container_name} -- bash -c "useradd $user_name -s /bin/bash -m"
+    lxc exec ${container_name} -- bash -c "mkdir -p /home/$user_name/.ssh "
+    local tmp_ssh_key=$(mktemp)
     ssh-keygen -f key -P ""
-    mkdir /home/${user_name}/.ssh
-    mv key /home/${user_name}/.ssh/id_rsa
+    mkdir -p /home/${user_name}/.ssh
+    cp key /home/${user_name}/.ssh/id_rsa
     lxc file push key.pub ${container_name}/home/${user_name}/.ssh/authorized_keys
-    mv key.pub /home/${user_name}/.ssh/id_rsa.pub
+    cp key.pub /home/${user_name}/.ssh/id_rsa.pub
     chmod +rw /home/${user_name}/.ssh/id_rsa*
+    rm -f key
 }
 
 initialize_repo_on_host() {
@@ -57,22 +59,22 @@ clone_and_configure_repo_on_container() {
 
     local tmp_gitconfig=$(mktemp)
     cat > ${tmp_gitconfig} <<EOF
-    [user]
-        email = ${user_name}@${user_name}.pl
-        name = ${user_name}
-    [push]
-        default = matching
+[user]
+email = ${user_name}@${user_name}.pl
+name = ${user_name}
+[push]
+default = matching
 EOF
     lxc file push ${tmp_gitconfig} ${container_name}/home/${user_name}/.gitconfig
     rm ${tmp_gitconfig}
 }
 
 create_bash_configuration_for_user_on_host() {
-    cat > /home/$user_name/.profile <<EOF
-    curl localhost:5000/user/${user_name}/entered
-    ssh \$(lxc ls ${container_name} -c4 --format=csv | cut -d" " -f1) -l ${user_name}
-    curl localhost:5000/user/${user_name}/exited
-    exit
+	cat > /home/$user_name/.profile <<EOF
+curl localhost:5000/user/${user_name}/entered
+ssh \$(lxc ls ${container_name} -c4 --format=csv | cut -d" " -f1) -l ${user_name}
+curl localhost:5000/user/${user_name}/exited
+exit
 EOF
 }
 
