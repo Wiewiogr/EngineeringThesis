@@ -65,6 +65,6 @@ class Users:
         result = scriptsExecutor.get_user_last_modified_file(name, path_to_repos)
         result_map = {
             "name": result.splitlines()[0],
-            "file": result.splitlines()[1:]
+            "file": "/n".join(result.splitlines()[1:])
         }
         return result_map
