@@ -17,3 +17,7 @@ def create_user(name, password):
 
 def remove_user(name):
     run_script_with_args("removeUser.sh", [name])
+
+
+def get_user_last_modified_file(name, path_to_repositories):
+    run_script_with_args("getLastChangedFile.sh", [path_to_repositories, name])

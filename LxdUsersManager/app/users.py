@@ -24,6 +24,9 @@ def decrease_number_of_connections(user):
     }
 
 
+path_to_repos = "/root/repos"
+
+
 class Users:
     def __init__(self):
         self.users = []
@@ -57,3 +60,11 @@ class Users:
             if self.db[user_name]["numberOfConnections"] > 0:
                 connected_users.append(user_name)
         return connected_users
+
+    def get_last_modified_file(self, name):
+        result = scriptsExecutor.get_user_last_modified_file(name, path_to_repos)
+        result_map = {
+            "name": result.splitlines()[0],
+            "file": result.splitlines()[1:]
+        }
+        return result_map
