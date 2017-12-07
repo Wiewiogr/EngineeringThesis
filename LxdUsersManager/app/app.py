@@ -12,7 +12,7 @@ def user_last_history(name):
     return jsonify(users_manager.get_user_history(str(name)))
 
 
-@app.route('/user/<name>/history')
+@app.route('/user/<name>/file')
 def user_last_modified_file(name):
     return jsonify(users_manager.get_last_modified_file(str(name)))
 
