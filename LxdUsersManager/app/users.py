@@ -63,8 +63,13 @@ class Users:
 
     def get_last_modified_file(self, name):
         result = scriptsExecutor.get_user_last_modified_file(name, path_to_repos)
+        splitted = result.splitlines()
+        name = splitted[0]
+        file = ""
+        if splitted.length() > 1:
+            file = "\n".join(result.splitlines()[1:])
         result_map = {
-            "name": result.splitlines()[0],
-            "file": "\n".join(result.splitlines()[1:])
+            "name": name,
+            "file": file
         }
         return result_map
