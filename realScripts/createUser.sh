@@ -45,6 +45,7 @@ setup_ssh_on_container() {
 initialize_repo_on_host() {
     mkdir -p ${path_to_repos}/${user_name}
     git init ${path_to_repos}/${user_name} --bare
+    git clone -l ${path_to_repos}/${user_name} ${path_to_repos}/${user_name}-wc
 }
 
 clone_and_configure_repo_on_container() {
@@ -54,19 +55,23 @@ clone_and_configure_repo_on_container() {
     lxc exec ${container_name} -- bash -c "rm -rf /home/$user_name/tmp"
     lxc file push gitignore ${container_name}/home/${user_name}/.gitignore
     lxc exec ${container_name} -- bash -c "cd /home/$user_name && git add -A && git commit -m \"init\" && git push"
-    lxc exec ${container_name} -- bash -c "chown -R $user_name:$user_name /home/$user_name/.git"
-    lxc exec ${container_name} -- bash -c "chmod -R +rw /home/$user_name/.git"
+    lxc exec ${container_name} -- bash -c "apt-get update"
 
-    local tmp_gitconfig=$(mktemp)
-    cat > ${tmp_gitconfig} <<EOF
-[user]
-email = ${user_name}@${user_name}.pl
-name = ${user_name}
-[push]
-default = matching
-EOF
-    lxc file push ${tmp_gitconfig} ${container_name}/home/${user_name}/.gitconfig
-    rm ${tmp_gitconfig}
+    lxc exec ${container_name} -- bash -c "apt-get install inotify-tools --assume-yes"
+    lxc file push inotifyScript.sh ${container_name}/root/scr.sh
+#    lxc exec ${container_name} -- bash -c "chown -R $user_name:$user_name /home/$user_name/.git"
+#    lxc exec ${container_name} -- bash -c "chmod -R +rw /home/$user_name/.git"
+
+#    local tmp_gitconfig=$(mktemp)
+#    cat > ${tmp_gitconfig} <<EOF
+#[user]
+#email = ${user_name}@${user_name}.pl
+#name = ${user_name}
+#[push]
+#default = matching
+#EOF
+#    lxc file push ${tmp_gitconfig} ${container_name}/home/${user_name}/.gitconfig
+#    rm ${tmp_gitconfig}
 }
 
 create_bash_configuration_for_user_on_host() {

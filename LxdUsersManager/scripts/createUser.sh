@@ -43,8 +43,11 @@ setup_ssh_on_container() {
 }
 
 initialize_repo_on_host() {
-    mkdir -p ${path_to_repos}/${user_name}
-    git init ${path_to_repos}/${user_name} --bare
+    local path_to_repo=${path_to_repos}/${user_name}
+    mkdir -p ${path_to_repo}
+    #git init ${path_to_repos}/${user_name} --bare
+    git init ${path_to_repo}
+    git -C ${path_to_repo} config --local receive.denyCurrentBranch updateInstead
 }
 
 clone_and_configure_repo_on_container() {
