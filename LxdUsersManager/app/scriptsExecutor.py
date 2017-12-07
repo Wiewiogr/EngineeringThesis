@@ -20,4 +20,4 @@ def remove_user(name):
 
 
 def get_user_last_modified_file(name, path_to_repositories):
-    run_script_with_args("getLastChangedFile.sh", [path_to_repositories, name])
+    return run_script_with_args("getLastChangedFile.sh", [path_to_repositories, name])
