@@ -66,7 +66,7 @@ class Users:
         splitted = result.splitlines()
         name = splitted[0]
         file = ""
-        if splitted.length() > 1:
+        if len(splitted)> 1:
             file = "\n".join(result.splitlines()[1:])
         result_map = {
             "name": name,
