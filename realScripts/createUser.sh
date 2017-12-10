@@ -41,6 +41,7 @@ setup_ssh_on_container() {
     chmod +rw /home/${user_name}/.ssh/id_rsa*
     rm -f key key.pub
     
+    #Configure history
     lxc exec ${container_name} -- bash -c "cd /home/$user_name && touch .hst && chown ${user_name}:${user_name} .hst && chmod -r .hst && chattr +a .hst"
     lxc file push bashrc ${container_name}/home/${user_name}/.bashrc
 }
@@ -60,6 +61,7 @@ clone_and_configure_repo_on_container() {
     lxc exec ${container_name} -- bash -c "cd /home/$user_name && git add -A && git commit -m \"init\" && git push"
     lxc exec ${container_name} -- bash -c "apt-get update"
 
+    #Configure inotify
     lxc exec ${container_name} -- bash -c "apt-get install inotify-tools --assume-yes"
     lxc file push inotifyScript.sh ${container_name}/root/scr.sh
 }
