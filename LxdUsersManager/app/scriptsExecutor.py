@@ -1,9 +1,11 @@
 import subprocess
 import os
+import sys
 
+scripts_path = sys.argv[1]
 
 def run_script_with_args(script_name, params):
-    path = os.path.join(os.getcwd(), "scripts", script_name)
+    path = os.path.join(os.getcwd(), scripts_path, script_name)
     return subprocess.check_output(["bash", path] + params)
 
 
