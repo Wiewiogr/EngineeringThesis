@@ -1,7 +1,9 @@
+ubuntu
 .bash_logout
 .bashrc
 .profile
 .ssh
+.vim
 .bash_history
 .gitconfig
 .cache
