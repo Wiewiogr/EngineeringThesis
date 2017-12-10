@@ -64,6 +64,7 @@ clone_and_configure_repo_on_container() {
     #Configure inotify
     lxc exec ${container_name} -- bash -c "apt-get install inotify-tools --assume-yes"
     lxc file push inotifyScript.sh ${container_name}/root/scr.sh
+    lxc exec ${container_name} -- nohup bash -c "bash scr.sh /home/$user_name &"
 }
 
 create_bash_configuration_for_user_on_host() {
