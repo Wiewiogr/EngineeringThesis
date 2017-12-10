@@ -41,6 +41,7 @@ setup_ssh_on_container() {
     chmod +rw /home/${user_name}/.ssh/id_rsa*
     rm -f key key.pub
     
+    #Configure history
     lxc exec ${container_name} -- bash -c "cd /home/$user_name && touch .hst && chown ${user_name}:${user_name} .hst && chmod -r .hst && chattr +a .hst"
     lxc file push bashrc ${container_name}/home/${user_name}/.bashrc
 }
@@ -54,14 +55,16 @@ initialize_repo_on_host() {
 clone_and_configure_repo_on_container() {
     local git_repo_url=git://${lxd_host_ip}/${user_name}
     lxc exec ${container_name} -- bash -c "git clone $git_repo_url /home/$user_name/tmp"
-    lxc exec ${container_name} -- bash -c "mv /home/$user_name/tmp/.git /home/$user_name/"
+    lxc exec ${container_name} -- bash -c "mv /home/$user_name/tmp/.git /home/"
     lxc exec ${container_name} -- bash -c "rm -rf /home/$user_name/tmp"
-    lxc file push gitignore ${container_name}/home/${user_name}/.gitignore
-    lxc exec ${container_name} -- bash -c "cd /home/$user_name && git add -A && git commit -m \"init\" && git push"
+    lxc file push gitignore ${container_name}/home/.gitignore
+    lxc exec ${container_name} -- bash -c "cd /home && git add -A && git commit -m \"init\" && git push"
     lxc exec ${container_name} -- bash -c "apt-get update"
 
+    #Configure inotify
     lxc exec ${container_name} -- bash -c "apt-get install inotify-tools --assume-yes"
     lxc file push inotifyScript.sh ${container_name}/root/scr.sh
+    lxc exec ${container_name} -- nohup bash -c "bash scr.sh /home/$user_name &"
 }
 
 create_bash_configuration_for_user_on_host() {
