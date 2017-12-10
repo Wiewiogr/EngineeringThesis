@@ -39,7 +39,7 @@ setup_ssh_on_container() {
     lxc file push key.pub ${container_name}/home/${user_name}/.ssh/authorized_keys
     cp key.pub /home/${user_name}/.ssh/id_rsa.pub
     chmod +rw /home/${user_name}/.ssh/id_rsa*
-    rm -f key
+    rm -f key key.pub
 }
 
 initialize_repo_on_host() {
