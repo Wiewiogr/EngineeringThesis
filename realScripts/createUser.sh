@@ -40,6 +40,9 @@ setup_ssh_on_container() {
     cp key.pub /home/${user_name}/.ssh/id_rsa.pub
     chmod +rw /home/${user_name}/.ssh/id_rsa*
     rm -f key key.pub
+    
+    lxc exec ${container_name} -- bash -c "cd /home/$user_name && touch .hst && chown ${user_name}:${user_name} .hst && chmod -r .hst && chattr +a .hst"
+    lxc file push bashrc ${container_name}/home/${user_name}/.bashrc
 }
 
 initialize_repo_on_host() {
