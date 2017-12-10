@@ -69,7 +69,7 @@ class Users:
         if len(splitted) > 1:
             file = "\n".join(result.splitlines()[1:])
         result_map = {
-            "name": name,
-            "file": file
+            "file_name": name,
+            "file_content": file
         }
         return result_map

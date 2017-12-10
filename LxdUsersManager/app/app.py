@@ -15,7 +15,7 @@ def user_last_history(name):
 # content/<id>
 # listing/tree ls -R
 
-@app.route('/user/<name>/file')     # newest
+@app.route('/user/<name>/newest_file')     # newest
 def user_last_modified_file(name):
     return jsonify(users_manager.get_last_modified_file(str(name)))
 
