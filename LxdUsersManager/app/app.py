@@ -7,12 +7,15 @@ app = Flask(__name__)
 users_manager = users.Users()
 
 
+
 @app.route('/user/<name>/history')
 def user_last_history(name):
     return jsonify(users_manager.get_user_history(str(name)))
 
+# content/<id>
+# listing/tree ls -R
 
-@app.route('/user/<name>/file')
+@app.route('/user/<name>/file')     # newest
 def user_last_modified_file(name):
     return jsonify(users_manager.get_last_modified_file(str(name)))
 
