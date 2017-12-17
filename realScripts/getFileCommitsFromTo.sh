@@ -8,10 +8,10 @@ fi
 user_name=$1
 container_name=C${user_name}
 path_to_repos=/root/repos
-file=/home/$(echo $2 | base64 --decode)
+file=$(echo $2 | base64 --decode)
 
 if [[ $# -eq 3 ]] ; then
-    git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$2)" ${file}
+    git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$3)" -- ${file}
 elif [[ $# -eq 4 ]] ; then
-    git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$2)" --until="$(date +"%m.%d.%y %H:%M" -d @$3)" ${file}
+    git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$3)" --until="$(date +"%m.%d.%y %H:%M" -d @$4)" -- ${file}
 fi
