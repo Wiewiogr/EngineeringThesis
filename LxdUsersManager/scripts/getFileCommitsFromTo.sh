@@ -11,7 +11,7 @@ file=$(echo $2 | base64 --decode)
 
 if [[ $# -eq 2 ]] ; then
     git -C ${path_to_repos}/${user_name} --no-pager shortlog -- ${file}
-if [[ $# -eq 3 ]] ; then
+elif [[ $# -eq 3 ]] ; then
     git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$3)" -- ${file}
 elif [[ $# -eq 4 ]] ; then
     git -C ${path_to_repos}/${user_name} --no-pager shortlog --since="$(date +"%m.%d.%y %H:%M" -d @$3)" --until="$(date +"%m.%d.%y %H:%M" -d @$4)" -- ${file}
