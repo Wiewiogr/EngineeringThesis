@@ -43,7 +43,7 @@ def get_commits_from_to(name, time_from, time_to):
 
 
 @app.route('/user/<name>/file/<file_name>/commit/')
-def get_file_commits_from(name, file_name):
+def get_file_commits(name, file_name):
     pass
 
 

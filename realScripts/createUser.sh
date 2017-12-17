@@ -32,7 +32,6 @@ create_container() {
 setup_ssh_on_container() {
     lxc exec ${container_name} -- bash -c "useradd $user_name -s /bin/bash -m"
     lxc exec ${container_name} -- bash -c "mkdir -p /home/$user_name/.ssh "
-    local tmp_ssh_key=$(mktemp)
     ssh-keygen -f key -P ""
     mkdir -p /home/${user_name}/.ssh
     cp key /home/${user_name}/.ssh/id_rsa
