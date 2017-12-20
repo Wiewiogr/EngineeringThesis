@@ -33,27 +33,27 @@ def get_changes_in_commit(name, id):
 
 
 @app.route('/user/<name>/commit/from/<time_from>/')
-def get_commits_from(name, time_from):
+def get_commits_from(name, time_from):  # script done
     pass
 
 
 @app.route('/user/<name>/commit/from/<time_from>/to/<time_to>')
-def get_commits_from_to(name, time_from, time_to):
+def get_commits_from_to(name, time_from, time_to):  # script done
     pass
 
 
 @app.route('/user/<name>/file/<file_name>/commit/')
-def get_file_commits(name, file_name):
+def get_file_commits(name, file_name):  # script done
     pass
 
 
 @app.route('/user/<name>/file/<file_name>/commit/from/<time_from>')
-def get_file_commits_from(name, file_name, time_from):
+def get_file_commits_from(name, file_name, time_from):  # script done
     pass
 
 
 @app.route('/user/<name>/file/<file_name>/commit/from/<time_from>/to/<time_to>')
-def get_file_commits_from_to(name, file_name, time_from, time_to):
+def get_file_commits_from_to(name, file_name, time_from, time_to):  # script done
     pass
 
 
