@@ -9,4 +9,4 @@ user_name=$1
 path_to_repos=/root/repos
 commit_id=$2
 
-git -C ${path_to_repos}/${user_name} diff ${commit_id}
+git -C ${path_to_repos}/${user_name} --no-pager show ${commit_id}
