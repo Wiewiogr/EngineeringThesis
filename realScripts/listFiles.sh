@@ -12,6 +12,6 @@ path_to_repos=/root/repos
 if [[ $# -eq 1 ]] ; then
     git -C ${path_to_repos}/${user_name} --no-pager ls-tree --name-only -r HEAD
 else
-    commit_id=$3
+    commit_id=$2
     git -C ${path_to_repos}/${user_name} --no-pager ls-tree --name-only -r ${commit_id}
 fi
