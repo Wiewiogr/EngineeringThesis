@@ -18,17 +18,37 @@ def user_last_history(name, number):
 
 
 @app.route('/user/<name>/history/from/<time_from>')
-def user_history_from(name, time_from):
+def user_history_from(name, time_from):  # script done
     pass
 
 
 @app.route('/user/<name>/history/from/<time_from>/to/<time_to>')
-def user_history_from_to(name, time_from, time_to):
+def user_history_from_to(name, time_from, time_to):  # script done
     pass
 
 
 @app.route('/user/<name>/commit/id/<id>')
-def get_changes_in_commit(name, id):
+def get_changes_in_commit(name, id):  # toBeDone !!!!!
+    pass
+
+
+@app.route('/user/<name>/files/')
+def get_files(name, id):  # toBeDone !!!!!
+    pass
+
+
+@app.route('/user/<name>/files/commit/id/<id>')
+def get_files_in_commit(name, id):  # toBeDone !!!!!
+    pass
+
+
+@app.route('/user/<user_name>/files/name/<file_name>')
+def get_file_content(user_name, file_name):  # toBeDone !!!!!
+    pass
+
+
+@app.route('/user/<user_name>/files/name/<file_name>/commit/id/<id>')
+def get_file_content_in_commit(user_name, file_name, id):  # toBeDone !!!!
     pass
 
 
@@ -56,9 +76,6 @@ def get_file_commits_from(name, file_name, time_from):  # script done
 def get_file_commits_from_to(name, file_name, time_from, time_to):  # script done
     pass
 
-
-# content/<id>
-# listing/tree ls -R
 
 @app.route('/user/<name>/newest_file')
 def user_last_modified_file(name):
