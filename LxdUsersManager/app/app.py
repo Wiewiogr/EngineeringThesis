@@ -43,12 +43,12 @@ def get_files_in_commit(name, id):  # toBeDone !!!!!
 
 
 @app.route('/user/<user_name>/files/name/<file_name>')
-def get_file_content(user_name, file_name):  # toBeDone !!!!!
+def get_file_content(user_name, file_name):  # script done
     pass
 
 
 @app.route('/user/<user_name>/files/name/<file_name>/commit/id/<id>')
-def get_file_content_in_commit(user_name, file_name, id):  # toBeDone !!!!
+def get_file_content_in_commit(user_name, file_name, id):  # script done
     pass
 
 
