@@ -28,7 +28,7 @@ def user_history_from_to(name, time_from, time_to):  # script done
 
 
 @app.route('/user/<name>/commit/id/<id>')
-def get_changes_in_commit(name, id):  # toBeDone !!!!!
+def get_changes_in_commit(name, id):  # script done
     pass
 
 
