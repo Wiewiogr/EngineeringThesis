@@ -33,12 +33,12 @@ def get_changes_in_commit(name, id):  # script done
 
 
 @app.route('/user/<name>/files/')
-def get_files(name, id):  # toBeDone !!!!!
+def get_files(name, id):  # script done
     pass
 
 
 @app.route('/user/<name>/files/commit/id/<id>')
-def get_files_in_commit(name, id):  # toBeDone !!!!!
+def get_files_in_commit(name, id):  # script done
     pass
 
 
