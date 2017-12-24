@@ -41,7 +41,12 @@ class Users:
         scriptsExecutor.remove_user(name)
         del self.db[name]
 
-    def get_user_history(self, name):
+    def get_user_history(self, name, number_of_lines):
+        if name in self.db:
+            return scriptsExecutor.get_user_history(name, number_of_lines).splitlines()
+        return []
+
+    def get_all_user_history(self, name):
         if name in self.db:
             return scriptsExecutor.get_user_history(name).splitlines()
         return []
@@ -73,3 +78,38 @@ class Users:
             "file_content": file
         }
         return result_map
+
+    def get_file_commits(self, user_name, file_name, time_from, time_to):
+        if user_name in self.db:
+            return scriptsExecutor.get_file_commits(user_name, file_name, time_from, time_to).splitlines()
+        return []
+
+    def get_commits(self, user_name, time_from, time_to):
+        if user_name in self.db:
+            return scriptsExecutor.get_commits(user_name, time_from, time_to).splitlines()
+        return []
+
+    def get_file_content(self, user_name, file_name, commit_id):
+        if user_name in self.db:
+            return scriptsExecutor.get_file_content(user_name, file_name, commit_id)
+        return ""
+
+    def get_user_history_from_to(self, user_name, time_from, time_to):
+        if user_name in self.db:
+            return scriptsExecutor.get_user_history_from_to(user_name, time_from, time_to).splitlines()
+        return []
+
+    def get_changes_in_commit(self, user_name, id):
+        if user_name in self.db:
+            return scriptsExecutor.get_changes_in_commit(user_name, id)
+        return ""
+
+    def list_files(self, user_name, id):
+        if user_name in self.db:
+            return scriptsExecutor.list_files(user_name, id).splitlines()
+        return []
+
+    def list_files_prefixed_with(self, user_name, prefix, id):
+        if user_name in self.db:
+            return scriptsExecutor.list_files_prefixed_with(user_name, prefix, id).splitlines()
+        return []

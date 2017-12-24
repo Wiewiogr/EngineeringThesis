@@ -1,3 +1,5 @@
+#!/bin/bash
+
 to_watch=$1
 inotifywait -e modify,create,delete -m ${to_watch} | 
 while read -r directory event filename; do 
