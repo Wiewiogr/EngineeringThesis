@@ -1,0 +1,25 @@
+<app-date-picker></app-date-picker>
+
+<button (click)="getHistory();">
+    load history
+</button>
+
+<div>
+  <h2>{{userName}}'s history</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>terminal</th>
+        <th>date</th>
+        <th>command</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="history.length">
+      <tr *ngFor='let line of history'>
+        <td>{{line.terminal}}</td>
+        <td>{{line.time}}</td>
+        <td>{{line.line}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+    <br>
+    <form>
+      <div>
+        <label>commit id:</label>
+        <input class="form-control" [(ngModel)]="commitId" name="commitId">
+      </div>
+
+      <div>
+        <label>prefix:</label>
+        <input class="form-control" [(ngModel)]="filePrefix" name="filePrefix">
+      </div>
+    </form>
+
+</div>
+
+<textarea readonly cols=80 rows=20>
+  {{fileContent}}
+</textarea>
+<br>
+<button (click)="getFiles();">
+    load files
+</button>
+
+<div>
+  <h2>{{userName}}'s files</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>path</th>
+        <th>content</th>
+        <th>commits</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="files.length">
+      <tr *ngFor='let file of files'>
+        <td>{{file}}</td>
+        <td>
+          <button (click)="getFileContent(file);">
+            show content
+          </button>
+        </td>
+        <td>
+          <a routerLink="/commits/{{userName}}/{{encode(file)}}">
+            <button>commits</button>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

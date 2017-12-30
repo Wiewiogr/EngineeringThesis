@@ -1,0 +1,28 @@
+<div class="container">
+    date: <ng-datepicker [options]="options" [(ngModel)]="date"></ng-datepicker>
+    <br>
+    <form>
+      <div>
+        <label>from:</label>
+        <input
+        class="form-control"
+        id="from"
+        required
+        placeholder="hh:mm"
+        pattern="[0-9][0-9]:[0-9][0-9]"
+        [(ngModel)]="from" name="from">
+      </div>
+
+      <div>
+          <label>to:</label>
+          <input
+          class="form-control"
+          id="to"
+          required
+          placeholder="hh:mm"
+          pattern="[0-9][0-9]:[0-9][0-9]"
+          [(ngModel)]="to" name="to">
+      </div>
+    </form>
+
+</div>
