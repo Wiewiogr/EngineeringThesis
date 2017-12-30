@@ -1,4 +1,5 @@
-.*
 *~
 *.pyc
 LxdUsersManager/users
+.idea
+.editorconfig
