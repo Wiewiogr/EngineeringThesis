@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask.ext.cors import CORS
 
 import users
 
 app = Flask(__name__)
+cors = CORS(app)
 
 users_manager = users.Users()
 
@@ -63,7 +65,7 @@ def get_file_content_in_commit(user_name, file_name, id):
 
 
 @app.route('/user/<name>/commits/')
-def get_commits_from(name):
+def get_commits(name):
     return jsonify(users_manager.get_commits(str(name), "", ""))
 
 
@@ -77,17 +79,17 @@ def get_commits_from_to(name, time_from, time_to):
     return jsonify(users_manager.get_commits(str(name), str(time_from), str(time_to)))
 
 
-@app.route('/user/<name>/file/<file_name>/commit/')
+@app.route('/user/<name>/file/<file_name>/commits/')
 def get_file_commits(name, file_name):
     return jsonify(users_manager.get_file_commits(str(name), str(file_name),  "", ""))
 
 
-@app.route('/user/<name>/file/<file_name>/commit/from/<time_from>')
+@app.route('/user/<name>/file/<file_name>/commits/from/<time_from>')
 def get_file_commits_from(name, file_name, time_from):
     return jsonify(users_manager.get_file_commits(str(name), str(file_name),  str(time_from), ""))
 
 
-@app.route('/user/<name>/file/<file_name>/commit/from/<time_from>/to/<time_to>')
+@app.route('/user/<name>/file/<file_name>/commits/from/<time_from>/to/<time_to>')
 def get_file_commits_from_to(name, file_name, time_from, time_to):
     return jsonify(users_manager.get_file_commits(str(name), str(file_name),  str(time_from), str(time_to)))
 
@@ -127,5 +129,11 @@ def user_exited(name):
 @app.route('/connected')
 def connected_users():
     result = users_manager.get_list_of_connected_users()
+    print result
+    return jsonify(result)
+
+@app.route('/user')
+def get_users():
+    result = users_manager.get_users()
     print result
     return jsonify(result)

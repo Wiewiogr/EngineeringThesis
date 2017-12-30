@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-echo "user" $1
-echo "item 1"
-echo "item 2"
-echo "item 3"
-echo "item 4"
-echo "item 5"
+echo "23423423 /dev/pts0/ "
+echo "23423423 /dev/pts0/ ls"
+echo "23423423 /dev/pts0/ vim a"
+echo "23423423 /dev/pts0/ bash script.sh arg1 arg2"
+echo "23423423 /dev/pts0/ vim b"
