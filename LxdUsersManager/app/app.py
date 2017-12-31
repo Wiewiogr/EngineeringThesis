@@ -36,7 +36,7 @@ def get_changes_in_commit(name, id):
 
 @app.route('/user/<name>/files/')
 def list_files(name):
-    return jsonify(users_manager.list_files(str(name), ""))
+    return jsonify(users_manager.list_files(str(name), " "))
 
 
 @app.route('/user/<name>/files/commit/id/<id>')
@@ -66,7 +66,7 @@ def get_file_content_in_commit(user_name, file_name, id):
 
 @app.route('/user/<name>/commits/')
 def get_commits(name):
-    return jsonify(users_manager.get_commits(str(name), "", ""))
+    return jsonify(users_manager.get_commits(str(name), " ", " "))
 
 
 @app.route('/user/<name>/commits/from/<time_from>/')
