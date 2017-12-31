@@ -31,11 +31,21 @@ def get_user_last_modified_file(name, path_to_repositories):
 
 
 def get_file_commits(user_name, file_name, time_from, time_to):
-    return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name, time_from, time_to])
+    if time_from == "":
+        return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name])
+    elif time_to == "":
+        return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name, time_from])
+    else:
+        return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name, time_from, time_to])
 
 
 def get_commits(user_name, time_from, time_to):
-    return run_script_with_args("getCommitsFromTo.sh", [user_name, time_from, time_to])
+    if time_from == "":
+        return run_script_with_args("getCommitsFromTo.sh", [user_name, ])
+    elif time_to == "":
+        return run_script_with_args("getCommitsFromTo.sh", [user_name, time_from])
+    else:
+        return run_script_with_args("getCommitsFromTo.sh", [user_name, time_from, time_to])
 
 
 def get_file_content(user_name, file_name, commit_id):
