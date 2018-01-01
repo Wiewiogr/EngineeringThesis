@@ -7,10 +7,11 @@ fi
 
 user_name=$1
 prefix=$(echo $2 | base64 --decode)
+dir=$(echo $0 | awk 'BEGIN{FS=OFS="/"}{$NF=""; NF--; print}')
 
 if [[ $# -eq 2 ]] ; then
-    bash listFiles.sh ${user_name} | grep ^${prefix}
+    bash ${dir}/listFiles.sh ${user_name} | grep ^${prefix}
 else
     commit_id=$3
-    bash listFiles.sh ${user_name} ${commit_id}| grep ^${prefix}
+    bash ${dir}/listFiles.sh ${user_name} ${commit_id}| grep ^${prefix}
 fi
