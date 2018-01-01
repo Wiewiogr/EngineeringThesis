@@ -1,0 +1,8 @@
+[Unit]
+Description=Inotify for tracking changes in user home file
+
+[Service]
+ExecStart=/root/inotifyScript.sh /home/%i
+
+[Install]
+WantedBy=multi-user.target

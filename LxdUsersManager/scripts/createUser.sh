@@ -79,9 +79,12 @@ clone_and_configure_repo_on_container() {
     echo "configure intoify beg" 1>&2
     lxc exec ${container_name} -- bash -c "apt-get install inotify-tools --assume-yes"
     echo "1" 1>&2
-    lxc file push ${dir}/inotifyScript.sh ${container_name}/root/scr.sh
+    lxc file push ${dir}/inotifyScript.sh ${container_name}/root/inotifyScript.sh
+    lxc file push ${dir}/inotify.service ${container_name}/etc/systemd/system/inotify@.service
+    lxc exec ${container_name} -- bash -c "chmod +x /root/inotifyScript.sh"
+    lxc exec ${container_name} -- bash -c "systemctl enable inotify@${user_name}.service"
+    lxc exec ${container_name} -- bash -c "systemctl start inotify@${user_name}.service"
     echo "2" 1>&2
-    lxc exec ${container_name} -- bash nohup bash -c "bash scr.sh /home/$user_name &"
     echo "configure intoify ned" 1>&2
 }
 
