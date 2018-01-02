@@ -40,4 +40,9 @@ export class CommitsComponent implements OnInit {
     .subscribe(commits => this.commits = commits);
   }
 
+  getTime(time) {
+    const date = new Date((+time) * 1000);
+    return date;
+  }
+
 }

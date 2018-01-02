@@ -22,7 +22,7 @@
       <tr *ngFor='let commit of commits'>
         <td>{{commit.id}}</td>
         <td>{{commit.fileName}}</td>
-        <td>{{commit.date}}</td>
+        <td>{{getTime(commit.date) | date: 'hh:mm'}}</td>
         <td>{{commit.message}}</td>
         <td>
           <button (click)="commitDiff.getDiff(userName, commit.id);">load diff</button>
