@@ -3,3 +3,4 @@
 LxdUsersManager/users
 .idea
 .editorconfig
+.vscode/*

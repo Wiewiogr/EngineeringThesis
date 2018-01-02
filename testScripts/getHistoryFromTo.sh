@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-echo "23423423 /dev/pts0/ "
-echo "23423423 /dev/pts0/ history"
-echo "23423423 /dev/pts0/ from to"
+echo "1514889426 /dev/pts0/ "
+echo "1514889426 /dev/pts0/ history"
+echo "1514889426 /dev/pts0/ from to"

@@ -111,19 +111,19 @@ class Users:
             return parse_history_lines(scriptsExecutor.get_user_history_from_to(user_name, time_from, time_to))
         return []
 
-    def get_changes_in_commit(self, user_name, id):
+    def get_changes_in_commit(self, user_name, commit_id):
         if user_name in self.db:
-            return scriptsExecutor.get_changes_in_commit(user_name, id)
+            return scriptsExecutor.get_changes_in_commit(user_name, commit_id)
         return ""
 
-    def list_files(self, user_name, id):
+    def list_files(self, user_name, commit_id):
         if user_name in self.db:
-            return scriptsExecutor.list_files(user_name, id).splitlines()
+            return scriptsExecutor.list_files(user_name, commit_id).splitlines()
         return []
 
-    def list_files_prefixed_with(self, user_name, prefix, id):
+    def list_files_prefixed_with(self, user_name, prefix, commit_id):
         if user_name in self.db:
-            return scriptsExecutor.list_files_prefixed_with(user_name, prefix, id).splitlines()
+            return scriptsExecutor.list_files_prefixed_with(user_name, prefix, commit_id).splitlines()
         return []
 
 def parse_history_lines(history):
@@ -148,7 +148,7 @@ def parse_commits(commits):
             "id": splitted[0],
             "fileName": splitted[1],
             "date": splitted[2],
-            "message": splitted[2]
+            "message": splitted[3]
         }
         parsed_commits.append(commit)
     return parsed_commits

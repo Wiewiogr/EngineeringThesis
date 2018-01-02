@@ -34,7 +34,7 @@ export class DatePickerComponent implements OnInit {
       const date = this.date;
       date.setHours(+hour);
       date.setMinutes(+minute);
-      return date.getTime(); // / 1000;
+      return Math.floor(date.getTime() / 1000);
     } else {
       return 0;
     }
@@ -48,7 +48,7 @@ export class DatePickerComponent implements OnInit {
       const date = this.date;
       date.setHours(+hour);
       date.setMinutes(+minute);
-      return date.getTime(); // / 1000;
+      return Math.floor(date.getTime() / 1000);
     } else {
       return 0;
     }

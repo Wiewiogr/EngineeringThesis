@@ -49,21 +49,31 @@ def get_commits(user_name, time_from, time_to):
 
 
 def get_file_content(user_name, file_name, commit_id):
-    return run_script_with_args("getFileContent.sh", [user_name, file_name, commit_id])
+    if commit_id == "":
+        return run_script_with_args("getFileContent.sh", [user_name, file_name])
+    else:
+        return run_script_with_args("getFileContent.sh", [user_name, file_name, commit_id])
 
 
 def get_user_history_from_to(user_name, time_from, time_to):
-    return run_script_with_args("getHistoryFromTo.sh", [user_name, time_from, time_to])
+    if time_to == "":
+        return run_script_with_args("getHistoryFromTo.sh", [user_name, time_from])
+    else:
+        return run_script_with_args("getHistoryFromTo.sh", [user_name, time_from, time_to])
+
+def get_changes_in_commit(user_name, commit_id):
+    return run_script_with_args("getChangesFromCommit.sh", [user_name, commit_id])
 
 
-def get_changes_in_commit(user_name, id):
-    return run_script_with_args("getChangesFromCommit.sh", [user_name, id])
+def list_files(user_name, commit_id):
+    if commit_id == "":
+        return run_script_with_args("listFiles.sh", [user_name])
+    else:
+        return run_script_with_args("listFiles.sh", [user_name, commit_id])
 
 
-def list_files(user_name, id):
-    return run_script_with_args("listFiles.sh", [user_name, id])
-
-
-def list_files_prefixed_with(user_name, prefix, id):
-    return run_script_with_args("listFilesPrefixedWith.sh", [user_name, prefix, id])
-
+def list_files_prefixed_with(user_name, prefix, commit_id):
+    if commit_id == "":
+        return run_script_with_args("listFilesPrefixedWith.sh", [user_name, prefix])
+    else:
+        return run_script_with_args("listFilesPrefixedWith.sh", [user_name, prefix, commit_id])

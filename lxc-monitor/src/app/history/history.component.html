@@ -17,7 +17,7 @@
     <tbody *ngIf="history.length">
       <tr *ngFor='let line of history'>
         <td>{{line.terminal}}</td>
-        <td>{{line.time}}</td>
+        <td>{{getTime(line.time) | date: 'hh:mm'}}</td>
         <td>{{line.line}}</td>
       </tr>
     </tbody>

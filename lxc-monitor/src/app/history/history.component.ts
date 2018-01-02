@@ -4,6 +4,7 @@ import { HistoryService } from '../history.service';
 import { HistoryLine } from '../history-line';
 import { User } from '../user';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { retry } from 'rxjs/operators/retry';
 
 @Component({
   selector: 'app-history',
@@ -34,4 +35,8 @@ export class HistoryComponent implements OnInit {
     .subscribe(history => this.history = history);
   }
 
+  getTime(time) {
+    const date = new Date((+time) * 1000);
+    return date;
+  }
 }
