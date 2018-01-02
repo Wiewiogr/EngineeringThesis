@@ -77,19 +77,6 @@ class Users:
             users.append(user)
         return users
 
-    def get_last_modified_file(self, name):
-        result = scriptsExecutor.get_user_last_modified_file(name, path_to_repos)
-        splitted = result.splitlines()
-        name = splitted[0]
-        file = ""
-        if len(splitted) > 1:
-            file = "\n".join(result.splitlines()[1:])
-        result_map = {
-            "file_name": name,
-            "file_content": file
-        }
-        return result_map
-
     def get_file_commits(self, user_name, file_name, time_from, time_to):
         if user_name in self.db:
             return parse_commits(scriptsExecutor.get_file_commits(user_name, file_name, time_from, time_to))

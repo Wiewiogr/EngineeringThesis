@@ -94,11 +94,6 @@ def get_file_commits_from_to(name, file_name, time_from, time_to):
     return jsonify(users_manager.get_file_commits(str(name), str(file_name),  str(time_from), str(time_to)))
 
 
-@app.route('/user/<name>/newest_file')
-def user_last_modified_file(name):
-    return jsonify(users_manager.get_last_modified_file(str(name)))
-
-
 @app.route('/user', methods=['POST'])
 def create_user():
     content = request.get_json()

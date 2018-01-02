@@ -12,4 +12,4 @@ userdel ${user_name}
 rm -rf /home/${user_name}
 lxc delete --force ${container_name}
 rm -rf ${path_to_repos}/${user_name}
-rm -rf ${path_to_repos}/${user_name}-wc
+# rm -rf ${path_to_repos}/${user_name}-wc

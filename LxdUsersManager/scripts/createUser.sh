@@ -60,7 +60,7 @@ initialize_repo_on_host() {
     echo "initialize repo on host beg" 1>&2
     mkdir -p ${path_to_repos}/${user_name}
     git init ${path_to_repos}/${user_name} --bare
-    git clone -l ${path_to_repos}/${user_name} ${path_to_repos}/${user_name}-wc
+    # git clone -l ${path_to_repos}/${user_name} ${path_to_repos}/${user_name}-wc
     echo "initialize repo on host end" 1>&2
 }
 

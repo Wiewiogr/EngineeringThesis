@@ -26,10 +26,6 @@ def remove_user(name):
     run_script_with_args("removeUser.sh", [name])
 
 
-def get_user_last_modified_file(name, path_to_repositories):
-    return run_script_with_args("getLastChangedFile.sh", [path_to_repositories, name])
-
-
 def get_file_commits(user_name, file_name, time_from, time_to):
     if time_from == "":
         return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name])
