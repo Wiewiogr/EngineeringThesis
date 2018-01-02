@@ -29,13 +29,12 @@ path_to_repos = "/root/repos"
 
 class Users:
     def __init__(self):
-        self.users = []
-        self.db_name = "users"
         self.db = shelve.open("users")
 
     def create_user(self, name, password):
         scriptsExecutor.create_user(name, password)
         self.db[name] = create_user_object(name)
+        self.db.sync()
 
     def remove_user(self, name):
         scriptsExecutor.remove_user(name)
