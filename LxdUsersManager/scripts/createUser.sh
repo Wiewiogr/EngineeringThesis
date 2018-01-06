@@ -86,14 +86,21 @@ clone_and_configure_repo_on_container() {
     lxc exec ${container_name} -- bash -c "systemctl start inotify@${user_name}.service"
     echo "2" 1>&2
     echo "configure intoify ned" 1>&2
+
+    #disable git for user
+    lxc exec ${container_name} -- bash -c "setfacl -m u:${user_name}:r /usr/bin/git"
+
+    #disable message of the day
+    lxc exec ${container_name} -- bash -c "chmod -x /etc/update-motd.d/*"
+    
 }
 
 create_bash_configuration_for_user_on_host() {
 	echo "create bash config beg" 1>&2
 	cat > /home/$user_name/.profile <<EOF
-curl localhost:5000/user/${user_name}/entered
-ssh \$(lxc ls ${container_name} -c4 --format=csv | cut -d" " -f1) -l ${user_name}
-curl localhost:5000/user/${user_name}/exited
+curl -s localhost:5000/user/${user_name}/entered > /dev/null
+ssh -o StrictHostKeyChecking=no \$(lxc ls ${container_name} -c4 --format=csv | cut -d" " -f1) -l ${user_name}
+curl -s localhost:5000/user/${user_name}/exited > /dev/null
 exit
 EOF
 	echo "create bash config end" 1>&2
