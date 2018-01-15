@@ -6,11 +6,13 @@ fi
 
 path_to_repos=$1
 user_name=$2
-container_name=C$3
+container_name=C$2
+dir=$(echo $0 | awk 'BEGIN{FS=OFS="/"}{$NF=""; NF--; print}')
+file=$(echo ${user_name}/.hst | base64 )
 
 if [[ $# -eq 2 ]] ; then
-    lxc exec ${container_name} -- bash -c "cat /home/${user_name}/.hst"
+    bash ${dir}/getFileContent.sh ${path_to_repos} ${user_name} ${file}
 elif [[ $# -eq 3 ]] ; then
     number_of_lines=$3
-    lxc exec ${container_name} -- bash -c "cat /home/${user_name}/.hst | tail -n ${number_of_lines}"
+    bash ${dir}/getFileContent.sh ${path_to_repos} ${user_name} ${file} | tail -n ${number_of_lines}
 fi
