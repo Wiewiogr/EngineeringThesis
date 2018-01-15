@@ -1,13 +1,15 @@
 import subprocess
 import os
 import sys
+import configuration
 
-scripts_path = sys.argv[1]
+scripts_path = configuration.options.scripts_path
+repositories_path = configuration.options.repositories_path
 
 
 def run_script_with_args(script_name, params):
     path = os.path.join(os.getcwd(), scripts_path, script_name)
-    return subprocess.check_output(["bash", path] + params)
+    return subprocess.check_output(["bash", path, repositories_path] + params)
 
 
 def get_user_history(name, number_of_elements):

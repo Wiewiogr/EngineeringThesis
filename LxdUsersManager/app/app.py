@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify
 from flask.ext.cors import CORS
+import configuration
 
 import users
 
 app = Flask(__name__)
 cors = CORS(app)
 
-users_manager = users.Users()
+
+users_manager = users.Users(configuration.options.users_db_path)
 
 
 @app.route('/user/<name>/history')

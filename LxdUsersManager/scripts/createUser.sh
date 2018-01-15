@@ -1,15 +1,15 @@
 #!/bin/bash -x
 
 validate_and_setup_parameters() {
-    if [[ $# -lt 2 ]] ; then
-        echo "usage: $0 <username> <password>"
+    if [[ $# -lt 3 ]] ; then
+        echo "usage: $0 <repository> <username> <password>"
         exit 1
     fi
     dir=$(echo $0 | awk 'BEGIN{FS=OFS="/"}{$NF=""; NF--; print}')
-    user_name=$1
-    password=$2
+    user_name=$2
+    password=$3
     container_name=C${user_name}
-    path_to_repos=/root/repos
+    path_to_repos=$1
     lxd_host_ip=10.118.5.1
     echo "validation end" 1>&2
 }

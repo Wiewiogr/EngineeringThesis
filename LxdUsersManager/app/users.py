@@ -24,12 +24,9 @@ def decrease_number_of_connections(user):
     }
 
 
-path_to_repos = "/root/repos"
-
-
 class Users:
-    def __init__(self):
-        self.db = shelve.open("users")
+    def __init__(self, path_to_db):
+        self.db = shelve.open(path_to_db)
 
     def create_user(self, name, password):
         scriptsExecutor.create_user(name, password)
