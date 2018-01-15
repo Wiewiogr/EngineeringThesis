@@ -109,6 +109,7 @@ def create_user():
 def save_snapshot():
     content = request.get_json()
     path = content['path']
+    print('saving to path: ' + path)
     users_manager.save_snapshot(str(path))
     return "ok"
 
