@@ -105,6 +105,14 @@ def create_user():
     return "ok"
 
 
+@app.route('/user/snapshot', methods=['POST'])
+def save_snapshot():
+    content = request.get_json()
+    path = content['path']
+    users_manager.save_snapshot(str(path))
+    return "ok"
+
+
 @app.route('/user/<name>', methods=['DELETE'])
 def delete_user(name):
     users_manager.remove_user(str(name))

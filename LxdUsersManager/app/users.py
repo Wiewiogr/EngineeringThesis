@@ -27,6 +27,7 @@ def decrease_number_of_connections(user):
 class Users:
     def __init__(self, path_to_db):
         self.db = shelve.open(path_to_db)
+        self.path_to_db = path_to_db
 
     def create_user(self, name, password):
         scriptsExecutor.create_user(name, password)
@@ -108,6 +109,11 @@ class Users:
         if user_name in self.db:
             return scriptsExecutor.list_files_prefixed_with(user_name, prefix, commit_id).splitlines()
         return []
+
+    def save_snapshot(self, path):
+        scriptsExecutor.save_snapshot(self.path_to_db, path)
+
+
 
 def parse_history_lines(history):
     print history

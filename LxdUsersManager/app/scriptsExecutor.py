@@ -75,3 +75,6 @@ def list_files_prefixed_with(user_name, prefix, commit_id):
         return run_script_with_args("listFilesPrefixedWith.sh", [user_name, prefix])
     else:
         return run_script_with_args("listFilesPrefixedWith.sh", [user_name, prefix, commit_id])
+
+def save_snapshot(db_path, save_path):
+    run_script_with_args("saveContainersSnapshot.sh", [db_path, save_path])

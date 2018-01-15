@@ -34,4 +34,7 @@ export class UsersComponent implements OnInit {
     this.userService.createUser(name, password).subscribe();
   }
 
+  saveSnapshot(path: string) {
+    this.userService.saveSnapshot(path).subscribe(msg => console.log('udalo sie'));
+  }
 }

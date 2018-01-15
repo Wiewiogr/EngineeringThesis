@@ -31,22 +31,24 @@ export class UserService {
     return this.httpClient.get<User[]>(this.url + 'user').pipe(
       catchError(this.handleError<User[]>('getUsers', []))
     );
-    // return of(USERS);
   }
 
   deleteUser(user: User) {
     return this.httpClient.delete(this.url + 'user/' + user.name, httpOptions).pipe(
       catchError(this.handleError('deleteUser', null))
     );
-    // return of();
   }
 
   createUser(name: string, password: string) {
-    // http logic
     return this.httpClient.post(this.url + 'user', { username: name, password: password}, httpOptions).pipe(
       catchError(this.handleError('createUser', null))
     );
-    // return of();
+  }
+
+  saveSnapshot(path: string) {
+    return this.httpClient.post(this.url + 'user/snapshot', { path: path}, httpOptions).pipe(
+      catchError(this.handleError('saveSnapshot', null))
+    );
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
