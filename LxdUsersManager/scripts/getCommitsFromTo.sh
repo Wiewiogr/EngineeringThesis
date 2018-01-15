@@ -14,7 +14,7 @@ if [[ $# -eq 2 ]] ; then
 elif [[ $# -eq 3 ]] ; then
     git -C ${path_to_repos}/${user_name} --no-pager log --pretty=oneline --since="$(date +"%m.%d.%y %H:%M" -d @$3)" | grep -v init | grep -v .hst
 elif [[ $# -eq 4 ]] ; then
-    git -C ${path_to_repos}/${user_name} --no-pager log --pretty=oneline --since="$(date +"%m.%d.%y %H:%M" -d @$3)" --until="$(date +"%m.%d.%y %H:%M" -d @$3)" | grep -v init | grep -v .hst
+    git -C ${path_to_repos}/${user_name} --no-pager log --pretty=oneline --since="$(date +"%m.%d.%y %H:%M" -d @$3)" --until="$(date +"%m.%d.%y %H:%M" -d @$4)" | grep -v init | grep -v .hst
 fi
 
 exit 0
