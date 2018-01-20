@@ -1,5 +1,8 @@
 
 /* AppComponent's private CSS styles */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

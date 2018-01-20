@@ -15,6 +15,9 @@ import { CommitDiffComponent } from './commit-diff/commit-diff.component';
 import { FilesComponent } from './files/files.component';
 import { FilesService } from './files.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FileContentModalComponent } from './file-content-modal/file-content-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -25,15 +28,22 @@ import { HttpClientModule } from '@angular/common/http';
     DatePickerComponent,
     CommitsComponent,
     CommitDiffComponent,
-    FilesComponent
+    FilesComponent,
+    FileContentModalComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     NgDatepickerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [ UserService, HistoryService, CommitsService, FilesService ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    FileContentModalComponent,
+    CommitDiffComponent
+  ]
 })
 export class AppModule { }

@@ -2,6 +2,9 @@ fix interface in files (show file content)
 stop/start container
 add many users
 fix times should be the same in container and on host
-online interface for history and commits browsing
-download container history and repo
 allow adding files
+create frontend only for browsing without modification options
+
+done:
+download container history and repo
+online interface for history and commits browsing

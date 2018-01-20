@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommitsService } from '../commits.service';
 import { Commit } from '../commit';
 import { CommitDiffComponent } from '../commit-diff/commit-diff.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-commits',
@@ -20,7 +21,8 @@ export class CommitsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private commitsService: CommitsService
+    private commitsService: CommitsService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -43,6 +45,16 @@ export class CommitsComponent implements OnInit {
   getTime(time) {
     const date = new Date((+time) * 1000);
     return date;
+  }
+
+  openDialog(commitId: string): void {
+    const dialogRef = this.dialog.open(CommitDiffComponent, {
+      data: { userName: this.userName, commitId: commitId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommitsService } from '../commits.service';
 import {Diff2Html} from 'diff2html';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -12,10 +14,13 @@ export class CommitDiffComponent implements OnInit {
   outputHtml: string;
 
   constructor(
+    public dialogRef: MatDialogRef<CommitDiffComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private commitsService: CommitsService
   ) {}
 
   ngOnInit() {
+    this.getDiff(this.data.userName, this.data.commitId);
   }
 
   showDiff(diff: string) {
@@ -28,4 +33,7 @@ export class CommitDiffComponent implements OnInit {
     .subscribe(diff => this.showDiff(diff));
   }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

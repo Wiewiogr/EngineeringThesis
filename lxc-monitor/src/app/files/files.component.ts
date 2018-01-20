@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { DataSource } from '@angular/cdk/collections';
 import { FilesService } from '../files.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { FileContentModalComponent } from '../file-content-modal/file-content-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-files',
@@ -13,11 +18,11 @@ export class FilesComponent implements OnInit {
   files: string[] = [];
   commitId = '';
   filePrefix = '';
-  fileContent = '';
 
   constructor(
     private route: ActivatedRoute,
-    private service: FilesService
+    private service: FilesService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -34,12 +39,17 @@ export class FilesComponent implements OnInit {
     .subscribe(files => this.files = files);
   }
 
-  getFileContent(fileName: string) {
-      this.service.getFileContent(this.userName, fileName, this.commitId)
-      .subscribe(content => this.fileContent = content);
-  }
-
   encode(str: string) {
     return btoa(str);
+  }
+
+  openDialog(fileName: string): void {
+    const dialogRef = this.dialog.open(FileContentModalComponent, {
+      data: { userName: this.userName, commitId: this.commitId, fileName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

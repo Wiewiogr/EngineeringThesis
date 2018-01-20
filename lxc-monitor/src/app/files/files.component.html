@@ -14,10 +14,6 @@
 
 </div>
 
-<textarea readonly cols=80 rows=20>
-  {{fileContent}}
-</textarea>
-<br>
 <button (click)="getFiles();">
     load files
 </button>
@@ -36,9 +32,10 @@
       <tr *ngFor='let file of files'>
         <td>{{file}}</td>
         <td>
-          <button (click)="getFileContent(file);">
+          <button (click)="openDialog(file);">
             show content
           </button>
+
         </td>
         <td>
           <a routerLink="/commits/{{userName}}/{{encode(file)}}">

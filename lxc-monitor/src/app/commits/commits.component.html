@@ -1,5 +1,5 @@
 <app-date-picker></app-date-picker>
-<app-commit-diff></app-commit-diff>
+<!-- <app-commit-diff></app-commit-diff> -->
 
 <button (click)="getCommits();">
     load
@@ -25,7 +25,7 @@
         <td>{{getTime(commit.date) | date: 'hh:mm'}}</td>
         <td>{{commit.message}}</td>
         <td>
-          <button (click)="commitDiff.getDiff(userName, commit.id);">load diff</button>
+          <button (click)="openDialog(commit.id);">load diff</button>
         </td>
       </tr>
     </tbody>
