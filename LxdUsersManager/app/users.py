@@ -117,7 +117,7 @@ class Users:
 
     
     def change_container_status(self, user, status):
-        scriptsExecutor.change_container_status(user, status)
+        scriptsExecutor.run_container(user, status)
 
 
 
