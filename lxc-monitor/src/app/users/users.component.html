@@ -52,8 +52,8 @@
             <button (click)="delete(user)">delete</button>
         </td>
         <td>
-            <button *ngIf="user.container=='Running'" (click)="stopContainer(user)">start</button>
-            <button *ngIf="user.container=='Stopped'" (click)="startContainer(user)">stop</button>
+            <button *ngIf="user.container=='Running'" (click)="stopContainer(user.name)">stop</button>
+            <button *ngIf="user.container=='Stopped'" (click)="startContainer(user.name)">start</button>
             <button *ngIf="user.container=='Offline'" disabled=true>offline</button>
         </td>
       </tr>
