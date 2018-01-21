@@ -1,12 +1,12 @@
 #!/bin/bash -x
 
-if [[ $# -lt 2 ]] ; then
-    echo "usage: $0 <user> <start/stop>"
+if [[ $# -lt 3 ]] ; then
+    echo "usage: $0 <repos> <user> <start/stop>"
     exit 1
 fi
 
-user_name=$1
+user_name=$2
 container_name=C${user_name}
-status=$2
+status=$3
 
 lxc ${status} ${container_name}
