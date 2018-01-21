@@ -28,6 +28,14 @@ def remove_user(name):
     run_script_with_args("removeUser.sh", [name])
 
 
+def run_container(name, status):
+    run_script_with_args("startOrStopContainer.sh", [name, status])
+
+
+def get_container_status(name):
+    return run_script_with_args("getContainerStatus.sh", [name])
+
+
 def get_file_commits(user_name, file_name, time_from, time_to):
     if time_from == "":
         return run_script_with_args("getFileCommitsFromTo.sh", [user_name, file_name])

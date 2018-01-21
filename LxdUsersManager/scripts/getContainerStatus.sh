@@ -8,4 +8,10 @@ fi
 user_name=$1
 container_name=C${user_name}
 
-lxc info ${container_name} | grep Status: | cut -d" " -f2
+result=$(lxc info ${container_name})
+
+if [[ $? -eq 0 ]] ; then
+    echo $result | grep Status: | cut -d" " -f2
+else
+    printf Offline
+fi

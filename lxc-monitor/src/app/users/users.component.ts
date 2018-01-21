@@ -30,11 +30,19 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(name: string, password: string) {
-    this.users.push({ name: name, isConnected: false});
+    this.users.push({ name: name, isConnected: false, container: 'Running'});
     this.userService.createUser(name, password).subscribe();
   }
 
   saveSnapshot(path: string) {
     this.userService.saveSnapshot(path).subscribe(msg => console.log('udalo sie'));
+  }
+
+  startContainer(name: string) {
+    this.userService.startContainer(name).subscribe();
+  }
+
+  stopContainer(name: string) {
+    this.userService.stopContainer(name).subscribe();
   }
 }

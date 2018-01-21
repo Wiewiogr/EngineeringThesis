@@ -56,19 +56,21 @@ class Users:
         self.db[name] = increase_number_of_connections(self.db[name])
         print self.db[name]
 
-    def get_list_of_connected_users(self):
-        connected_users = []
-        for user_name in self.db.keys():
-            if self.db[user_name]["numberOfConnections"] > 0:
-                connected_users.append(user_name)
-        return connected_users
+    # def get_list_of_connected_users(self):
+    #     connected_users = []
+    #     for user_name in self.db.keys():
+    #         if self.db[user_name]["numberOfConnections"] > 0:
+    #             connected_users.append(user_name)
+    #     return connected_users
 
     def get_users(self):
         users = []
         for user_name in self.db.keys():
+            container_status = scriptsExecutor.get_container_status(user_name)
             user = {
                 "name": user_name,
-                "isConnected": False
+                "isConnected": False,
+                "container": container_status
             }
             if self.db[user_name]["numberOfConnections"] > 0:
                 user["isConnected"] = True
@@ -112,6 +114,10 @@ class Users:
 
     def save_snapshot(self, path):
         scriptsExecutor.save_snapshot(self.path_to_db, path)
+
+    
+    def change_container_status(self, user, status):
+        scriptsExecutor.change_container_status(user, status)
 
 
 

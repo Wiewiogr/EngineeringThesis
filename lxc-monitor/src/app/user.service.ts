@@ -6,8 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const USERS: User[] = [
-  {name: 'user1', isConnected: true},
-  {name: 'user2', isConnected: false},
+  {name: 'user1', isConnected: true, container: 'Running'},
+  {name: 'user2', isConnected: false, container: 'Stopped'},
 ];
 
 const httpOptions = {
@@ -48,6 +48,18 @@ export class UserService {
   saveSnapshot(path: string) {
     return this.httpClient.post(this.url + 'user/snapshot', { path: path}, httpOptions).pipe(
       catchError(this.handleError('saveSnapshot', null))
+    );
+  }
+
+  startContainer(name: string) {
+    return this.httpClient.post(this.url + 'user/' + name + '/start', {}, httpOptions).pipe(
+      catchError(this.handleError('startContainer', null))
+    );
+  }
+
+  stopContainer(name: string) {
+    return this.httpClient.post(this.url + 'user/' + name + '/stop', {}, httpOptions).pipe(
+      catchError(this.handleError('stopContainer', null))
     );
   }
 

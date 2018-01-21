@@ -11,6 +11,18 @@ cors = CORS(app)
 users_manager = users.Users(configuration.options.users_db_path)
 
 
+@app.route('/user/<name>/start', , methods=['POST'])
+def user_container_start(name):
+    users_manager.change_container_status(str(name), "start")
+    return "ok"
+
+
+@app.route('/user/<name>/stop', , methods=['POST'])
+def user_container_stop(name):
+    users_manager.change_container_status(str(name), "stop")
+    return "ok"
+
+
 @app.route('/user/<name>/history')
 def user_all_history(name):
     return jsonify(users_manager.get_all_user_history(str(name)))
@@ -132,11 +144,11 @@ def user_exited(name):
     return "ok"
 
 
-@app.route('/connected')
-def connected_users():
-    result = users_manager.get_list_of_connected_users()
-    print result
-    return jsonify(result)
+# @app.route('/connected')
+# def connected_users():
+#     result = users_manager.get_list_of_connected_users()
+#     print result
+#     return jsonify(result)
 
 @app.route('/user')
 def get_users():
