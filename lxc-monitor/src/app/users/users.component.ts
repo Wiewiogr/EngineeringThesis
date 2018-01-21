@@ -39,10 +39,10 @@ export class UsersComponent implements OnInit {
   }
 
   startContainer(name: string) {
-    this.userService.startContainer(name).subscribe(response => this.getUsers);
+    this.userService.startContainer(name).subscribe(response => this.getUsers());
   }
 
   stopContainer(name: string) {
-    this.userService.stopContainer(name).subscribe(response => this.getUsers);
+    this.userService.stopContainer(name).subscribe(response => this.getUsers());
   }
 }
