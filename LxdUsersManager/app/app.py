@@ -11,13 +11,13 @@ cors = CORS(app)
 users_manager = users.Users(configuration.options.users_db_path)
 
 
-@app.route('/user/<name>/start', , methods=['POST'])
+@app.route('/user/<name>/start',methods=['POST'])
 def user_container_start(name):
     users_manager.change_container_status(str(name), "start")
     return "ok"
 
 
-@app.route('/user/<name>/stop', , methods=['POST'])
+@app.route('/user/<name>/stop', methods=['POST'])
 def user_container_stop(name):
     users_manager.change_container_status(str(name), "stop")
     return "ok"
